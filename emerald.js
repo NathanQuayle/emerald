@@ -38,30 +38,30 @@ class Emerald {
 
 let numPassing = 0;
 let numFailing = 0;
-let itDiv, descDiv;
+let itElement, descElement;
 
 const expect = (testObj) => new Emerald(testObj);
 
 const describe = (desc, fn) => {
-    descDiv = document.createElement('div');
+    descElement = document.createElement('div');
 
-    descDiv.innerText = desc;
-    descDiv.className = 'desc'
+    descElement.innerText = desc;
+    descElement.className = 'desc'
 
     document
         .getElementById('test-container')
-        .appendChild(descDiv)
+        .appendChild(descElement)
     fn();
 }
 
 const it = (desc, fn) => {
-    itDiv = document.createElement('div');
-    itDiv.innerText = desc;
+    itElement = document.createElement('div');
+    itElement.innerText = desc;
 
     try {
         fn();
     } catch(err) {
-        elementBuilder(err);
+        elementBuilder(err, false);
     }
 }
 
@@ -77,24 +77,24 @@ const numberBuilder = () => {
     }
 }
 
-const elementBuilder = (msg = undefined, isPassing = false) => {
-    let testDiv = document.createElement('div');
+const elementBuilder = (msg, isPassing) => {
+    let testResultElement = document.createElement('div');
 
-    testDiv.className = 'test-result'
+    testResultElement.className = 'test-result'
 
     if(msg) {
-        testDiv.innerText = msg;
+        testResultElement.innerText = msg;
     }
 
     if(isPassing) {
-        itDiv.className = 'it-pass';
+        itElement.className = 'it-pass';
         numPassing++;
     } else {
-        itDiv.className = 'it-fail';
+        itElement.className = 'it-fail';
         numFailing++;
     }   
 
-    descDiv.appendChild(itDiv).appendChild(testDiv);
+    descElement.appendChild(itElement).appendChild(testResultElement);
 
     numberBuilder();
 }
